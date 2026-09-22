@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Hub India — Smart Shopping Deals</title>
+<meta name="description" content="Deal Hub India - discover products and deals from multiple online shopping platforms.">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:linear-gradient(135deg,#111827,#2563eb);color:white;padding:18px 5%;position:sticky;top:0;z-index:5}
+.nav{max-width:1200px;margin:auto;display:flex;align-items:center;gap:18px}.logo{font-size:25px;font-weight:800;white-space:nowrap}.logo span{color:#fbbf24}
+.search{flex:1;max-width:620px;margin:auto;display:flex}.search input{width:100%;padding:13px 16px;border:0;border-radius:10px 0 0 10px;font-size:15px}.search button{border:0;background:#f59e0b;color:#111827;padding:0 20px;border-radius:0 10px 10px 0;font-weight:700}
+.hero{max-width:1200px;margin:25px auto;padding:35px 25px;border-radius:20px;background:linear-gradient(135deg,#dbeafe,#fff7ed);display:flex;justify-content:space-between;gap:20px;align-items:center}.hero h1{font-size:38px;margin:0 0 10px}.hero p{color:#526071;font-size:17px}.hero .badge{font-size:70px}
+.wrap{max-width:1200px;margin:auto;padding:0 20px 40px}.cats{display:flex;gap:10px;overflow:auto;padding:8px 0 20px}.cat{border:1px solid #dbe2ea;background:white;padding:10px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}.cat.active,.cat:hover{background:#2563eb;color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 5px 20px #17203312;border:1px solid #e7ebf1}.pic{height:180px;background:#eef2ff;display:flex;align-items:center;justify-content:center;font-size:70px}.info{padding:15px}.platform{font-size:12px;color:#64748b}.title{font-weight:700;margin:7px 0;min-height:42px}.price{font-size:21px;font-weight:800}.old{text-decoration:line-through;color:#94a3b8;font-size:13px;margin-left:7px}.discount{color:#16a34a;font-size:13px;margin-left:5px}.buy{display:block;text-align:center;text-decoration:none;background:#2563eb;color:white;padding:11px;border-radius:9px;margin-top:13px;font-weight:700}.buy:hover{background:#1d4ed8}
+.note{margin:25px 0;background:#fff;border:1px solid #e2e8f0;padding:16px;border-radius:12px;color:#596579;font-size:14px}footer{background:#111827;color:#cbd5e1;padding:30px 20px;text-align:center}footer strong{color:white}
+@media(max-width:650px){.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%}.hero h1{font-size:29px}.hero .badge{font-size:48px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="logo">Deal <span>Hub</span> India</div>
+    <div class="search"><input id="search" placeholder="Search products..."><button onclick="filterProducts()">Search</button></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div><h1>Smart Shopping, Better Deals 🛍️</h1><p>Discover products from different online shopping platforms in one place.</p></div>
+  <div class="badge">🔥</div>
+</section>
+
+<main class="wrap">
+  <div class="cats">
+    <button class="cat active" onclick="setCat('All',this)">All</button>
+    <button class="cat" onclick="setCat('Electronics',this)">📱 Electronics</button>
+    <button class="cat" onclick="setCat('Fashion',this)">👕 Fashion</button>
+    <button class="cat" onclick="setCat('Home',this)">🏠 Home</button>
+    <button class="cat" onclick="setCat('Gaming',this)">🎮 Gaming</button>
+    <button class="cat" onclick="setCat('Deals',this)">🔥 Deals</button>
+  </div>
+  <div id="grid" class="grid"></div>
+  <div class="note">ℹ️ <strong>Demo website:</strong> Replace each product's Buy Now link with your affiliate/product link before publishing. Prices and availability should be updated from the original shopping platform.</div>
+</main>
+
+<footer><strong>Deal Hub India</strong><br><br>Compare products. Discover deals. Shop smart.<br><br>© 2026 Deal Hub India</footer>
+
+<script>
+const products=[
+ {name:"Wireless Bluetooth Earbuds",cat:"Electronics",price:"₹999",old:"₹1,999",discount:"50% OFF",platform:"Amazon",emoji:"🎧",url:"#"},
+ {name:"Smart Watch",cat:"Electronics",price:"₹1,499",old:"₹2,999",discount:"50% OFF",platform:"Flipkart",emoji:"⌚",url:"#"},
+ {name:"Men's Casual T-Shirt",cat:"Fashion",price:"₹499",old:"₹999",discount:"50% OFF",platform:"Myntra",emoji:"👕",url:"#"},
+ {name:"LED Study Lamp",cat:"Home",price:"₹699",old:"₹1,299",discount:"46% OFF",platform:"Meesho",emoji:"💡",url:"#"},
+ {name:"Gaming Headset",cat:"Gaming",price:"₹1,299",old:"₹2,499",discount:"48% OFF",platform:"Amazon",emoji:"🎧",url:"#"},
+ {name:"Backpack",cat:"Fashion",price:"₹799",old:"₹1,499",discount:"47% OFF",platform:"Flipkart",emoji:"🎒",url:"#"},
+ {name:"Mobile Stand",cat:"Deals",price:"₹199",old:"₹399",discount:"50% OFF",platform:"Meesho",emoji:"📱",url:"#"},
+ {name:"Portable Speaker",cat:"Electronics",price:"₹899",old:"₹1,799",discount:"50% OFF",platform:"Amazon",emoji:"🔊",url:"#"}
+];
+let active="All";
+function render(list=products){
+ document.getElementById("grid").innerHTML=list.map(p=>`
+ <article class="card">
+  <div class="pic">${p.emoji}</div>
+  <div class="info"><div class="platform">${p.platform} • ${p.cat}</div>
+  <div class="title">${p.name}</div>
+  <div><span class="price">${p.price}</span><span class="old">${p.old}</span><span class="discount">${p.discount}</span></div>
+  <a class="buy" href="${p.url}" target="_blank" rel="noopener">Buy Now →</a></div>
+ </article>`).join("");
+}
+function filterProducts(){
+ const q=document.getElementById("search").value.toLowerCase();
+ render(products.filter(p=>(active==="All"||p.cat===active)&&p.name.toLowerCase().includes(q)));
+}
+function setCat(c,el){active=c;document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));el.classList.add("active");filterProducts()}
+document.getElementById("search").addEventListener("input",filterProducts);
+render();
+</script>
+</body>
+</html>
